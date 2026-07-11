@@ -7,9 +7,12 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
+  // Skip Nitro's server packaging — we ship static HTML to GitHub Pages.
+  nitro: false,
   tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
-    server: { entry: "server" },
+    // Pre-render every route to static HTML at build time so the site can be
+    // hosted on GitHub Pages (no server needed). Uses the default server entry —
+    // Lovable's src/server.ts SSR error wrapper is only relevant for server hosting.
+    prerender: { enabled: true, crawlLinks: true },
   },
 });
