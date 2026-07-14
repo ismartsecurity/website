@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import logoUrl from "@/assets/ismart-logo.png";
 import heroImg from "@/assets/hero-camera.jpg";
+import checkatradeLogo from "@/assets/checkatrade-logo.svg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -230,6 +231,15 @@ function Home() {
           <p className="mt-4 text-muted-foreground">
             Checkatrade Trusted — over 150 verified customer reviews.
           </p>
+          <a
+            href="https://www.checkatrade.com/trades/ismartsecurityltd"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center gap-3 rounded-full border border-border bg-card px-6 py-3 shadow-sm transition hover:-translate-y-0.5 hover:shadow-elegant"
+          >
+            <img src={checkatradeLogo} alt="Checkatrade" className="h-5 w-auto" />
+            <span className="text-sm font-medium text-brand-navy">View our profile <ArrowRight className="inline h-4 w-4" /></span>
+          </a>
         </div>
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {reviews.map((r) => (
