@@ -291,7 +291,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="rounded-3xl bg-card p-8 shadow-elegant md:p-10">
+          <div className="self-center rounded-3xl bg-card p-8 shadow-elegant md:p-10">
             <h3 className="text-2xl">Get your free site survey</h3>
             <BookingDialog
               trigger={
