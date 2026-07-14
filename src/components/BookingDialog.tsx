@@ -39,13 +39,15 @@ export function BookingDialog({ trigger, defaultOpen }: Props) {
     }
     setLoading(true);
     try {
-      const res = await fetch("https://formsubmit.co/ajax/info@ismartsecurity.co.uk", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: `New site survey request — ${parsed.data.name}`,
-          _template: "table",
-          _captcha: "false",
+          access_key: "3fa8f23b-dcc3-4c5c-acff-2ab447ff6b5e",
+          subject: `New site survey request — ${parsed.data.name}`,
+          from_name: "iSmart Security website",
+          replyto: parsed.data.email,
+          botcheck: (data.botcheck as string) || "",
           Name: parsed.data.name,
           Phone: parsed.data.phone,
           Email: parsed.data.email,
@@ -54,7 +56,8 @@ export function BookingDialog({ trigger, defaultOpen }: Props) {
           Notes: parsed.data.notes || "—",
         }),
       });
-      if (!res.ok) throw new Error(`FormSubmit responded ${res.status}`);
+      const result = await res.json();
+      if (!res.ok || !result.success) throw new Error(`Web3Forms responded ${res.status}`);
       setSubmitted(true);
     } catch {
       toast.error("Sorry, something went wrong sending your request. Please call us on 07961 297155.");
@@ -85,6 +88,8 @@ export function BookingDialog({ trigger, defaultOpen }: Props) {
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={onSubmit} className="grid gap-4 pt-2">
+              {/* honeypot: invisible to humans; bots that fill it are rejected as spam */}
+              <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               <div className="grid gap-2">
                 <Label htmlFor="name">Full name</Label>
                 <Input id="name" name="name" required maxLength={80} />
